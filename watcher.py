@@ -71,10 +71,10 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument("interval", nargs="?", default=3.0, type=float, help="The number of seconds to wait between each screenshot, for example, 3.0")
     parser.add_argument("screens", type=int, nargs="*", metavar="desktop", help="The id numbers of the virtual desktops you want to timelapse. For example, 0 would only timelapse the first desktop. 0 1 3 would timelapse the first, second, and fourth virtual desktop, while ignoring the third")
-    parser.add_argument("-c", "--current", action="store_true", help="Just print the ID number of the current desktop and exit.")
+    parser.add_argument("-i", "--interval", type=float, help="The number of seconds to wait between each screenshot, for example, 3.0")
     parser.add_argument("-d", "--directory", default=".", help="Specify the directory into which you want scrot to dump the screenshots. If ommitted, they will be put in the current directory.")
+    parser.add_argument("-c", "--current", action="store_true", help="Just print the ID number of the current desktop and exit.")
     args = parser.parse_args()
     
     if args.current:
@@ -83,6 +83,11 @@ if __name__ == "__main__":
     
     if len(args.screens) == 0:
         print "You must specify at least one virtual desktop ID number."
+        parser.print_help()
+        sys.exit(1)
+
+    if args.interval is None:
+        print "You must specify an interval with the -i argument"
         parser.print_help()
         sys.exit(1)
 

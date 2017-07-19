@@ -30,7 +30,7 @@ class Watcher(object):
             cur = get_curdesk()
             if cur in self.screens:
                 self.screenshot()
-            sys.stdout.write( "...  Desk {0} - {1} screenshots taken\r".format(cur, self.screenshot_count))
+            sys.stdout.write( "...  Desk {0} ... {1} screenshots taken \r".format(cur, self.screenshot_count))
             sys.stdout.flush()
             time.sleep(self.interval)
     

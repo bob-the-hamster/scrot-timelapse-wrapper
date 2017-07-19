@@ -44,7 +44,8 @@ class Watcher(object):
 
 def is_installed(progname):
     cmd = ["which", progname]
-    if subprocess.call(cmd, stdout=subprocess.DEVNULL) == 0:
+    DEVNULL = open(os.devnull, 'w')
+    if subprocess.call(cmd, stdout=DEVNULL) == 0:
         print "{0} found installed OK!".format(progname)
         return True
     print "{0} does not seem to be installed yet.".format(progname)

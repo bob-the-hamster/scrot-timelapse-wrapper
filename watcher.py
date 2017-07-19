@@ -27,11 +27,22 @@ class Watcher(object):
         print "Watching desktops {1} screenshot interval {0}".format(self.interval, self.screens)
         print "Saving output screenshots to {0}".format(os.path.realpath(self.output_dir))
         print "Press CTRL+C to cancel"
+        try:
+            self.main_loop()
+        except KeyboardInterrupt:
+            print ""
+            print "Finished writing screenshots!"
+            print "Convert them into a video with mencoder, for example:"
+            print ""
+            print "  mencoder -oac copy -audiofile music.mp3 -ovc lavc -mf w=1024:h=600:fps=12:type=png 'mf://{0}' -o timelapse.avi".format(os.path.join(self.output_dir, "*.png"))
+            print
+
+    def main_loop(self):
         while True:
             cur = get_curdesk()
             if cur in self.screens:
                 self.screenshot()
-            sys.stdout.write( "...  Desk {0} ... {1} screenshots taken \r".format(cur, self.screenshot_count))
+            sys.stdout.write( "   [Desk={0}] [{1} screenshots taken] \r".format(cur, self.screenshot_count))
             sys.stdout.flush()
             time.sleep(self.interval)
     

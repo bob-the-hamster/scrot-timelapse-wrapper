@@ -1,6 +1,6 @@
-#scrot-timelapse-wrapper
+# scrot-timelapse-wrapper #
 
-This is a tiny wrapper around the scrot and wmctrl utilities.
+This is a tiny wrapper around the __scrot__ and __wmctrl__ utilities.
 
 The purpose of using this tool rather than just calling scrot
 in a loop, is that it only takes screenshots when specific

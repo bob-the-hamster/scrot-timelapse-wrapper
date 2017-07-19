@@ -93,5 +93,4 @@ if __name__ == "__main__":
         sys.exit(1)
 
     app = Watcher(interval=args.interval, screens=args.screens, output_dir=args.directory)
-    print get_curdesk()
     app.run()

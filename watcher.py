@@ -25,6 +25,7 @@ class Watcher(object):
 
     def run(self):
         print "Watching desktops {1} screenshot interval {0}".format(self.interval, self.screens)
+        print "Saving output screenshots to {0}".format(os.path.realpath(self.output_dir))
         print "Press CTRL+C to cancel"
         while True:
             cur = get_curdesk()

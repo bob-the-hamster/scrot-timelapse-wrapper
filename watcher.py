@@ -15,9 +15,10 @@ from datetime import datetime
 
 class Watcher(object):
 
-    def __init__(self, interval, screens):
+    def __init__(self, interval, screens, output_dir="."):
         self.interval = interval
         self.screens = screens
+        self.output_dir = output_dir
         assert is_installed("wmctrl")
         assert is_installed("scrot")
         self.screenshot_count = 0
@@ -35,7 +36,7 @@ class Watcher(object):
     
     def screenshot(self):
         timestring = datetime.now().strftime("%F_%H.%M.%S.%f")
-        filename = os.path.join(".", timestring + ".png")
+        filename = os.path.join(self.output_dir, timestring + ".png")
         cmd = ["scrot", filename]
         subprocess.call(cmd)
         self.screenshot_count += 1
@@ -73,6 +74,7 @@ if __name__ == "__main__":
     parser.add_argument("interval", nargs="?", default=3.0, type=float, help="The number of seconds to wait between each screenshot, for example, 3.0")
     parser.add_argument("screens", type=int, nargs="*", metavar="desktop", help="The id numbers of the virtual desktops you want to timelapse. For example, 0 would only timelapse the first desktop. 0 1 3 would timelapse the first, second, and fourth virtual desktop, while ignoring the third")
     parser.add_argument("-c", "--current", action="store_true", help="Just print the ID number of the current desktop and exit.")
+    parser.add_argument("-d", "--directory", default=".", help="Specify the directory into which you want scrot to dump the screenshots. If ommitted, they will be put in the current directory.")
     args = parser.parse_args()
     
     if args.current:
@@ -84,6 +86,6 @@ if __name__ == "__main__":
         parser.print_help()
         sys.exit(1)
 
-    app = Watcher(interval=args.interval, screens=args.screens)
+    app = Watcher(interval=args.interval, screens=args.screens, output_dir=args.directory)
     print get_curdesk()
     app.run()
